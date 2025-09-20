@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Real-time Chat</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="loginContainer" class="centered">
+    <h2>Welcome to Chat</h2>
+    <input id="nameInput" type="text" placeholder="Enter your name" />
+    <button id="enterChatBtn">Enter Chat</button>
+  </div>
+
+  <div id="chatContainer" class="hidden">
+    <div id="chatHeader">Real-time Chat</div>
+    <ul id="messages"></ul>
+    <form id="messageForm" autocomplete="off">
+      <input id="messageInput" placeholder="Type a message..." autocomplete="off" />
+      <button>Send</button>
+    </form>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    const loginContainer = document.getElementById('loginContainer');
+    const chatContainer = document.getElementById('chatContainer');
+    const nameInput = document.getElementById('nameInput');
+    const enterChatBtn = document.getElementById('enterChatBtn');
+    const messages = document.getElementById('messages');
+    const messageForm = document.getElementById('messageForm');
+    const messageInput = document.getElementById('messageInput');
+
+    let userName = '';
+
+    enterChatBtn.addEventListener('click', () => {
+      const name = nameInput.value.trim();
+      if (name) {
+        userName = name;
+        loginContainer.classList.add('hidden');
+        chatContainer.classList.remove('hidden');
+        messageInput.focus();
+      } else {
+        alert('Please enter your name');
+      }
+    });
+
+    messageForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = messageInput.value.trim();
+      if (message) {
+        socket.emit('chat message', { name: userName, message });
+        messageInput.value = '';
+        messageInput.focus();
+      }
+    });
+
+    socket.on('chat message', ({ name, message }) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${name}:</strong> ${message}`;
+      messages.appendChild(li);
+      messages.scrollTop = messages.scrollHeight;
+    });
+  </script>
+</body>
+</html>
