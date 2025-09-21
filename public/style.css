@@ -9,6 +9,10 @@ body {
 }
 
 .centered {
+  position: absolute;
+  left:80px;
+  top:120px;
+  
   text-align: center;
   background: white;
   padding: 2rem;
