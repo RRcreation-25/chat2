@@ -13,7 +13,7 @@
     <button id="enterChatBtn">Enter Chat</button>
   </div>
 
-  <div id="chatContainer" class="hidden">
+  <div id="chatContainer" class="hidden2">
     <div id="chatHeader">Chat with Ravi</div>
     <ul id="messages"></ul>
     <form id="messageForm" autocomplete="off">
@@ -27,7 +27,7 @@
     const socket = io();
 
     const loginContainer = document.getElementById('loginContainer');
-    
+    const chatContainer = document.getElementById('chatContainer');
     const nameInput = document.getElementById('nameInput');
     const enterChatBtn = document.getElementById('enterChatBtn');
     const messages = document.getElementById('messages');
@@ -41,9 +41,9 @@
       if (name) {
         userName = name;
         loginContainer.classList.add('hidden');
-        chatContainer.classList.remove('hidden');
+        chatContainer.classList.remove('hidden2');
         messageInput.focus();
-        const chatContainer = document.getElementById('chatContainer');
+        
       } else {
         alert('Please enter your name');
       }
