@@ -20,6 +20,9 @@ body {
 .hidden {
   display: none;
 }
+.hidden2 {
+  display: none;
+}
 
 #chatContainer {
   display: flex;
